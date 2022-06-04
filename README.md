@@ -16,6 +16,7 @@ Create an online store website where you can buy goods.
 
 ### Functions that are being developed <br>
 >Buy goods
+>Return goods
 
 ### Technologies <br>
 >NestJS <br>
