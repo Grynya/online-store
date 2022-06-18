@@ -18,6 +18,14 @@ export class ProductController {
   getAll(): Promise<Product[]> {
     return this.productService.getAll();
   }
+  @Get("/name-sorted")
+  getAllSortedByName(): Promise<Product[]> {
+    return this.productService.getAllSortedByName();
+  }
+  @Get("/price-sorted")
+  getAllSortedByPrice(): Promise<Product[]> {
+    return this.productService.getAllSortedByPrice();
+  }
   @Post()
   add(@Body() product: Product): Promise<void> {
     return this.productService.add(product);
