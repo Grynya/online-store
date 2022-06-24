@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.3"
 services:
     api:
         build:
@@ -11,7 +11,7 @@ services:
             NODE_ENV: development
             PORT: 3000
         ports:
-            - "8080:3000"
+            - "8083:3000"
 
     postgres:
         image: postgres:10.4

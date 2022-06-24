@@ -17,6 +17,16 @@ export class ProductService {
     return this.productRepository.find();
   }
 
+  async getAllSortedByName(): Promise<Product[]> {
+    let products = await this.productRepository.find();
+    return products.sort(compareByName);
+  }
+
+  async getAllSortedByPrice(): Promise<Product[]> {
+    let products = await this.productRepository.find();
+    return products.sort(compareByPrice);
+  }
+
   async buy(id: string): Promise<void> {
     await this.productRepository.update(id, { isBought: true });
   }
@@ -24,4 +34,22 @@ export class ProductService {
   async delete(id: string): Promise<void> {
     await this.productRepository.delete(id);
   }
+}
+function compareByName( a: Product, b: Product) {
+  if ( a.name < b.name ){
+    return -1;
+  }
+  if ( a.name > b.name ){
+    return 1;
+  }
+  return 0;
+}
+function compareByPrice( a: Product, b: Product) {
+  if ( a.price < b.price ){
+    return -1;
+  }
+  if ( a.price > b.price ){
+    return 1;
+  }
+  return 0;
 }

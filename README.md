@@ -1,4 +1,4 @@
-# Team members list 
+# Team members list
 1. > Амброзяк Христина, ІА-93
 2. > Гриненко Анастасія, ІА-93
 3. > Михайлова Ілона, ІА-93
@@ -13,11 +13,10 @@ Create an online store website where you can buy goods.
 >Delete the product <br>
 >Display a list of products  <br>
 >View products sorted by name or price
-
-### Functions that are being developed <br>
 >Buy goods
 
 ### Technologies <br>
 >NestJS <br>
 >Docker & docker-compose (Docker-compose file describes backend and database Postgres) <br>
 >Microservices, Lambda/Serverless/FaaS
+> CI/CD (using Jenkins and git hooks)
