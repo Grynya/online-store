@@ -14,11 +14,11 @@ import {QueueReceiverService} from "./service/queue.receiver.service";
     TypeOrmModule.forRoot({
       type: 'postgres',
       // url: "localhost://user:password@postgres:5432/db",
-      host: 'localhost',
-      port: 5432,
-      username: 'user',
-      password: 'password',
-      database: 'db',
+      host: process.env.DATABASE_HOST,
+      port: parseInt(process.env.DATABASE_PORT),
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
       autoLoadEntities: true,
       synchronize: true
     }),

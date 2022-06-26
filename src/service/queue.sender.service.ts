@@ -1,11 +1,11 @@
 import {Injectable} from "@nestjs/common";
 import {Message} from "../models/Message";
+import * as amqp from 'amqplib/callback_api';
 
-const amqp = require('amqplib/callback_api');
 @Injectable()
 export class QueueSenderService {
     sendMessage = (message: Message) => {
-        amqp.connect('amqp://localhost', (connError, connection) => {
+        amqp.connect(process.env.AMPQ_HOST, (connError, connection) => {
             if (connError) {
                 throw connError;
             }
@@ -13,7 +13,7 @@ export class QueueSenderService {
                 if (channelError) {
                     throw channelError;
                 }
-                const QUEUE = 'codingtest'
+                const QUEUE = process.env.QUEUE_NAME
                 channel.assertQueue(QUEUE);
 
                 channel.sendToQueue(QUEUE, Buffer.from(JSON.stringify(message)));
