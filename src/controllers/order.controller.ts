@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import {OrderService} from "../services/order.service";
 import {Order} from "../models/Order";
+import {OrderRequest} from "./request/OrderRequest";
 
 @Controller('auth/orders')
 export class OrderController {
@@ -22,10 +23,9 @@ export class OrderController {
     /**
      * An endpoint to create a new order
      */
-    //todo: implementation of creation new order
     @Post()
-    add(@Body() order: Order): Promise<void> {
-        return this.orderService.add(order);
+    add(@Body() orderRequest: OrderRequest): Promise<void> {
+        return this.orderService.add(orderRequest);
     }
     /**
      * An endpoint to delete order
