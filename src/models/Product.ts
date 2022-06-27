@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany} from 'typeorm';
+import {OrderItem} from "./OrderItem";
 
 @Entity('Product')
 export class Product {
@@ -16,13 +17,13 @@ export class Product {
 
   @Column('boolean', { default: false }) private _isBought: boolean;
 
+  @OneToMany(type => OrderItem, orderItem => orderItem.order)
+  orderItems: OrderItem[];
+
   constructor(name: string, price: number, desc: string) {
     this.name = name;
     this.price = price;
     this.desc = desc;
   }
 
-  set isBought(value: boolean) {
-    this._isBought = value;
-  }
 }
