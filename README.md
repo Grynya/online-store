@@ -30,3 +30,6 @@ Create an online store website where you can buy goods.
 This is how Jenkins Job looks:
 ![Jenkins Job](img/jenkinsJob1.png)
 ![Jenkins Job](img/jenkinsJob2.png)
+
+Database diagram:
+![Jenkins Job](img/db_schema.png)
