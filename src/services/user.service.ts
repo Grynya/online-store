@@ -25,7 +25,6 @@ export class UserService {
             const foundUser = await this.userRepository.findOne({where: {
                     email: loginRequest.email
                 }});
-
             if (!foundUser) {
                 throw new Error('Name of user is not correct');
             }

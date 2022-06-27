@@ -7,12 +7,22 @@ export class OrderItem {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(type => Product, product => product.orderItems)
+    @ManyToOne(type => Product, product => product.orderItems, {
+        cascade: true,
+    })
     product: Product;
 
-    @ManyToOne(type => Order, order => order.orderItems)
+    @ManyToOne(type => Order, order => order.orderItems, {
+        cascade: true,
+    })
     order: Order;
 
     @Column()
     quantity: number;
+
+    constructor(product: Product, order: Order, quantity: number) {
+        this.product = product;
+        this.order = order;
+        this.quantity = quantity;
+    }
 }

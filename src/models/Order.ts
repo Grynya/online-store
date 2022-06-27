@@ -4,34 +4,48 @@ import {OrderItem} from "./OrderItem";
 
 @Entity('Order')
 export class Order {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn() private _id: number;
 
-    @ManyToOne(type => User, user => user.orders)
-    user: User;
+    @ManyToOne(type => User, user => user.orders) private _user: User;
 
-    @OneToMany(type => OrderItem, orderItem => orderItem.order)
-    orderItems: OrderItem[];
+    @OneToMany(type => OrderItem, orderItem => orderItem.order) _orderItems: OrderItem[];
 
-    @Column()
-    region: string;
+    @Column() private _region: string;
 
-    @Column()
-    city: string;
+    @Column() private _city: string;
 
-    @Column()
-    street: string;
+    @Column() private _street: string;
 
-    @Column()
-    numOfBuild: string;
+    @Column() private _numOfBuild: string;
 
+    constructor() {
+    }
 
-    constructor(user: User, orderItem: OrderItem[], Region: string, City: string, Street: string, NumOfBuild: string) {
-        this.user = user;
-        this.orderItems = orderItem;
-        this.region = Region;
-        this.city = City;
-        this.street = Street;
-        this.numOfBuild = NumOfBuild;
+    set user(value: User) {
+        this._user = value;
+    }
+
+    set orderItems(value: OrderItem[]) {
+        this._orderItems = value;
+    }
+
+    set region(value: string) {
+        this._region = value;
+    }
+
+    set city(value: string) {
+        this._city = value;
+    }
+
+    set street(value: string) {
+        this._street = value;
+    }
+
+    set numOfBuild(value: string) {
+        this._numOfBuild = value;
+    }
+
+    addOrderItem(orderItem):void{
+        this._orderItems.push(orderItem)
     }
 }
