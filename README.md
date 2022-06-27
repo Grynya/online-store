@@ -9,11 +9,12 @@
 Create an online store website where you can buy goods.
 
 ### Features already added <br>
+>Authorization/registration <br>
 >Add product <br>
 >Delete the product <br>
 >Display a list of products  <br>
 >View products sorted by name or price <br>
->Buy goods <br>
+>Make an order <br>
 >Send feedback messages <br>
 >Get all sent messages divided by its languages <br>
 
