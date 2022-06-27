@@ -6,10 +6,10 @@ import {
     Param,
     Body,
 } from '@nestjs/common';
-import {OrderService} from "../service/order.service";
+import {OrderService} from "../services/order.service";
 import {Order} from "../models/Order";
 
-@Controller('orders')
+@Controller('auth/orders')
 export class OrderController {
     constructor(private readonly orderService: OrderService) {}
     /**
@@ -22,6 +22,7 @@ export class OrderController {
     /**
      * An endpoint to create a new order
      */
+    //todo: implementation of creation new order
     @Post()
     add(@Body() order: Order): Promise<void> {
         return this.orderService.add(order);

@@ -6,30 +6,22 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()  _name: string;
+    @Column()
+    name: string;
 
-    @Column()  _email: string;
+    @Column({unique:true})
+    email: string;
 
-    @Column()  _password: string;
+    @Column()
+    password: string;
 
-    @OneToMany(type => Order, order => order.user)  orders: Order[];
+    @OneToMany(type => Order, order => order.user)
+    orders: Order[];
 
     constructor(name: string, email: string, password: string) {
-        this._name = name;
-        this._email = email;
-        this._password = password;
-    }
-
-
-    set name(value: string) {
-        this._name = value;
-    }
-
-    set email(value: string) {
-        this._email = value;
-    }
-    set password(value: string) {
-        this._password = value;
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 
 }

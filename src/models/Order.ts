@@ -14,24 +14,24 @@ export class Order {
     orderItems: OrderItem[];
 
     @Column()
-    Region: string;
+    region: string;
 
     @Column()
-    City: string;
+    city: string;
 
     @Column()
-    Street: string;
+    street: string;
 
     @Column()
-    NumOfBuild: string;
+    numOfBuild: string;
 
 
     constructor(user: User, orderItem: OrderItem[], Region: string, City: string, Street: string, NumOfBuild: string) {
         this.user = user;
         this.orderItems = orderItem;
-        this.Region = Region;
-        this.City = City;
-        this.Street = Street;
-        this.NumOfBuild = NumOfBuild;
+        this.region = Region;
+        this.city = City;
+        this.street = Street;
+        this.numOfBuild = NumOfBuild;
     }
 }

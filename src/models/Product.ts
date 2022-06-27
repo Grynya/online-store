@@ -15,8 +15,6 @@ export class Product {
   @Column()
   price: number;
 
-  @Column('boolean', { default: false }) private _isBought: boolean;
-
   @OneToMany(type => OrderItem, orderItem => orderItem.order)
   orderItems: OrderItem[];
 

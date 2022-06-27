@@ -10,8 +10,9 @@ export class OrderService {
     ) {
     }
 
-    async add(product: Order): Promise<void> {
-        await this.orderRepository.save(product);
+    async add(order: Order): Promise<void> {
+        return null;
+        // await this.orderRepository.save(order);
     }
 
     async getAll(): Promise<Order[]> {

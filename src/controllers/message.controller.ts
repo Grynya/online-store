@@ -5,10 +5,10 @@ import {
   Body,
 } from '@nestjs/common';
 import {Message} from "../models/Message";
-import {QueueReceiverService} from "../service/queue.receiver.service";
-import {QueueSenderService} from "../service/queue.sender.service";
+import {QueueReceiverService} from "../services/queue.receiver.service";
+import {QueueSenderService} from "../services/queue.sender.service";
 
-@Controller('messages')
+@Controller('auth/messages')
 export class MessageController {
   constructor(private readonly queueSenderService: QueueSenderService,
               private readonly queueReceiverService: QueueReceiverService) {}

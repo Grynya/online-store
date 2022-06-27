@@ -1,12 +1,20 @@
-import { Module } from '@nestjs/common';
+import {MiddlewareConsumer, Module} from '@nestjs/common';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import {ProductModule} from "./product.module";
+import {ProductModule} from "./modules/product.module";
 import {ProductController} from "./controllers/product.controller";
-import {ProductService} from "./service/product.service";
+import {ProductService} from "./services/product.service";
 import {MessageController} from "./controllers/message.controller";
-import {QueueSenderService} from "./service/queue.sender.service";
-import {QueueReceiverService} from "./service/queue.receiver.service";
+import {QueueSenderService} from "./services/queue.sender.service";
+import {QueueReceiverService} from "./services/queue.receiver.service";
+import {AuthMiddleware} from "./middleware/auth.middleware";
+import {OrderController} from "./controllers/order.controller";
+import {UserController} from "./controllers/user.controller";
+import {OrderService} from "./services/order.service";
+import {UserService} from "./services/user.service";
+import {UserModule} from "./modules/user.module";
+import {OrderModule} from "./modules/order.module";
+import {OrderItemModule} from "./modules/order.item.module";
 
 @Module({
   imports: [
@@ -22,9 +30,13 @@ import {QueueReceiverService} from "./service/queue.receiver.service";
       autoLoadEntities: true,
       synchronize: true
     }),
-    ProductModule
+    ProductModule, UserModule, OrderModule, OrderItemModule
   ],
-  controllers: [ProductController, MessageController],
-  providers: [ProductService, QueueSenderService, QueueReceiverService],
+  controllers: [ProductController, MessageController, OrderController, UserController],
+  providers: [ProductService, QueueSenderService, QueueReceiverService, OrderService, UserService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes("/auth")
+  }
+}
