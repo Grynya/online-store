@@ -23,6 +23,9 @@ export class OrderService {
         private userRepository: Repository<User>,
     ) {
     }
+    async getAll(): Promise<Order[]> {
+        return this.orderRepository.find();
+    }
 
     async add(orderRequest: OrderRequest): Promise<void> {
         let order: Order = new Order();
@@ -58,9 +61,8 @@ export class OrderService {
 
         await this.orderRepository.save(order);
     }
-
-    async getAll(): Promise<Order[]> {
-        return this.orderRepository.find();
+    async update(id: string, newOrder: Order) {
+        await this.orderRepository.update(id, newOrder);
     }
 
     async delete(id: string): Promise<void> {

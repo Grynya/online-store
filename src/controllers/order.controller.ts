@@ -4,11 +4,12 @@ import {
     Get,
     Post,
     Param,
-    Body,
+    Body, Put,
 } from '@nestjs/common';
 import {OrderService} from "../services/order.service";
 import {Order} from "../models/Order";
 import {OrderRequest} from "./request/OrderRequest";
+import {Product} from "../models/Product";
 
 @Controller('auth/orders')
 export class OrderController {
@@ -26,6 +27,13 @@ export class OrderController {
     @Post()
     add(@Body() orderRequest: OrderRequest): Promise<void> {
         return this.orderService.add(orderRequest);
+    }
+    /**
+     * An endpoint to update an order
+     */
+    @Put(':id')
+    put(@Param('id') id: string, newOrder: Order): Promise<void> {
+        return this.orderService.update(id, newOrder);
     }
     /**
      * An endpoint to delete order
