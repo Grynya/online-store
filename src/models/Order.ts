@@ -6,9 +6,10 @@ import {OrderItem} from "./OrderItem";
 export class Order {
     @PrimaryGeneratedColumn() private _id: number;
 
-    @ManyToOne(type => User, user => user.orders) private _user: User;
+    @ManyToOne(type => User, user => user.orders, { onDelete: 'CASCADE' }) private _user: User;
 
-    @OneToMany(type => OrderItem, orderItem => orderItem.order) _orderItems: OrderItem[];
+    @OneToMany(type => OrderItem, orderItem => orderItem.order,{ onDelete: 'CASCADE' })
+    _orderItems: OrderItem[];
 
     @Column() private _region: string;
 

@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable, UseFilters} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {User} from "../models/User";
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import {HttpExceptionFilter} from "../filters/http-exception.filter";
 
 @Injectable()
 export class UserService {
@@ -11,7 +12,7 @@ export class UserService {
         @InjectRepository(User)
         private userRepository: Repository<User>,
     ) {}
-    async getAll(): Promise<User[]>  {
+    getAll(): Promise<User[]>  {
         return this.userRepository.find();
     }
     async add(user: User): Promise<User> {
@@ -19,8 +20,8 @@ export class UserService {
         return await this.userRepository.save(user);
     }
 
+    @UseFilters(HttpExceptionFilter)
     async login(loginRequest) {
-        try {
             // @ts-ignore
             const foundUser = await this.userRepository.findOne({where: {
                     email: loginRequest.email
@@ -38,12 +39,7 @@ export class UserService {
 
                 return { user: { id: foundUser.id, name: foundUser.name }, token: token };
             } else {
-                throw new Error('Password is not correct');
+                throw new HttpException('Password is invalid', HttpStatus.UNAUTHORIZED);
             }
-        } catch (error) {
-            throw error;
-        }
     }
-
-
 }

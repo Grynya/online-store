@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable, UseFilters} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {Order} from "../models/Order";
@@ -6,6 +6,7 @@ import {OrderItemDto, OrderRequest} from "../controllers/request/OrderRequest";
 import {OrderItem} from "../models/OrderItem";
 import {Product} from "../models/Product";
 import {User} from "../models/User";
+import {HttpExceptionFilter} from "../filters/http-exception.filter";
 
 @Injectable()
 export class OrderService {
@@ -27,6 +28,7 @@ export class OrderService {
         return this.orderRepository.find();
     }
 
+    @UseFilters(HttpExceptionFilter)
     async add(orderRequest: OrderRequest): Promise<void> {
         let order: Order = new Order();
 
@@ -35,9 +37,8 @@ export class OrderService {
                 id: orderRequest.userId
             }
         });
-        if (!user) {
-            throw new Error('Id of user is not correct');
-        }
+        if (!user) throw new HttpException('No user with such id', HttpStatus.NOT_FOUND);
+
         order.user = user;
         order.region = orderRequest.address.region;
         order.city = orderRequest.address.city;
@@ -51,9 +52,9 @@ export class OrderService {
                     id: orderItemDto.productId
                 }
             });
-            if (!product) {
-                throw new Error('Id of product is not correct');
-            }
+
+            if (!product) throw new HttpException('No product with such id', HttpStatus.NOT_FOUND);
+
             let orderItem: OrderItem = new OrderItem(product, order, orderItemDto.quantity);
             order.addOrderItem(orderItem)
             await this.orderItemRepository.save(orderItem);
