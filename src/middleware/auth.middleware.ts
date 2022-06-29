@@ -1,27 +1,24 @@
-import * as jwt  from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 // @ts-ignore
-import {Injectable, NestMiddleware} from "@nestjs/common";
+import {HttpException, HttpStatus, Injectable, NestMiddleware, UseFilters} from "@nestjs/common";
 // @ts-ignore
-import { NextFunction, Request, Response } from "express";
+import {NextFunction, Request, Response} from "express";
 import {CustomRequest} from "./custom.request";
+import {HttpExceptionFilter} from "../filters/http-exception.filter";
 
 
 @Injectable()
+@UseFilters(HttpExceptionFilter)
 export class AuthMiddleware implements NestMiddleware {
     use(req: Request, res: Response, next: NextFunction) {
-        try {
             const token = req.header('Authorization')?.replace('Bearer ', '');
 
             if (!token) {
-                throw new Error();
+                throw new HttpException('Token not found', HttpStatus.NOT_FOUND);
             }
 
-            const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
-            (req as CustomRequest).token = decoded;
+        (req as CustomRequest).token = jwt.verify(token, process.env.TOKEN_SECRET);
 
             next();
-        } catch (err) {
-            res.status(401).json('Please authenticate');
-        }
     }
 }

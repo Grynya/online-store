@@ -27,7 +27,7 @@ export class UserService {
                     email: loginRequest.email
                 }});
             if (!foundUser) {
-                throw new Error('Name of user is not correct');
+                throw new HttpException('Name of user is not correct', HttpStatus.UNAUTHORIZED)
             }
 
             const isMatch = bcrypt.compareSync(loginRequest.password, foundUser.password);
