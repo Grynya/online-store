@@ -14,9 +14,9 @@ export class UserService {
     async getAll(): Promise<User[]>  {
         return this.userRepository.find();
     }
-    async add(user: User): Promise<void> {
+    async add(user: User): Promise<User> {
         user.password = await bcrypt.hash(user.password, 10);
-        await this.userRepository.save(user);
+        return await this.userRepository.save(user);
     }
 
     async login(loginRequest) {

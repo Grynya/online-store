@@ -9,8 +9,8 @@ export class ProductService {
     private productRepository: Repository<Product>,
   ) {}
 
-  async add(product: Product): Promise<void> {
-    await this.productRepository.save(product);
+   add(product: Product): Promise<Product> {
+    return this.productRepository.save(product);
   }
 
   async getAll(): Promise<Product[]> {
@@ -27,12 +27,12 @@ export class ProductService {
     return products.sort(compareByPrice);
   }
 
-  async delete(id: string): Promise<void> {
-    await this.productRepository.delete(id);
+   delete(id: string): Promise<any> {
+    return  this.productRepository.delete(id);
   }
 
-  async update(id: string, newProduct) {
-    await this.productRepository.update(id, newProduct);
+   update(id: string, newProduct): Promise<any> {
+    return this.productRepository.update(id, newProduct);
   }
 }
 function compareByName( a: Product, b: Product) {

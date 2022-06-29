@@ -29,7 +29,7 @@ export class UserController {
      * An endpoint that allow to create a new account
      */
     @Post("/registrar")
-    registration(@Body() user: User): Promise<void> {
+    registration(@Body() user: User): Promise<User> {
         return this.userService.add(user);
     }
 }

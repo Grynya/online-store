@@ -9,7 +9,6 @@ import {
 import {OrderService} from "../services/order.service";
 import {Order} from "../models/Order";
 import {OrderRequest} from "./request/OrderRequest";
-import {Product} from "../models/Product";
 
 @Controller('auth/orders')
 export class OrderController {
@@ -32,7 +31,7 @@ export class OrderController {
      * An endpoint to update an order
      */
     @Put(':id')
-    put(@Param('id') id: string, newOrder: Order): Promise<void> {
+    put(@Param('id') id: string, @Body() newOrder: Order): Promise<void> {
         return this.orderService.update(id, newOrder);
     }
     /**

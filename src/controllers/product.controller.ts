@@ -4,7 +4,8 @@ import {
   Get,
   Post,
   Param,
-  Body, Put,
+  Body,
+  Put,
 } from '@nestjs/common';
 import { Product } from '../models/Product';
 import { ProductService } from '../services/product.service';
@@ -22,29 +23,29 @@ export class ProductController {
   /**
    * An endpoint to get all products sorted by name
    */
-  @Get("/name-sorted")
+  @Get('/name-sorted')
   getAllSortedByName(): Promise<Product[]> {
     return this.productService.getAllSortedByName();
   }
   /**
    * An endpoint to get all products sorted by price
    */
-  @Get("/price-sorted")
+  @Get('/price-sorted')
   getAllSortedByPrice(): Promise<Product[]> {
     return this.productService.getAllSortedByPrice();
   }
   /**
-   * An endpoint to get add new product
+   * An endpoint to add new product
    */
   @Post()
-  add(@Body() product: Product): Promise<void> {
+  add(@Body() product: Product): Promise<Product> {
     return this.productService.add(product);
   }
   /**
    * An endpoint to update product
    */
   @Put(':id')
-  put(@Param('id') id: string, newProduct: Product): Promise<void> {
+  put(@Param('id') id: string, @Body() newProduct: Product): Promise<void> {
     return this.productService.update(id, newProduct);
   }
   /**
