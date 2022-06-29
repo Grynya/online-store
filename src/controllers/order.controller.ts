@@ -20,6 +20,10 @@ export class OrderController {
     getAll(): Promise<Order[]> {
         return this.orderService.getAll();
     }
+    @Get(':id')
+    getByUserId(@Param('id') id: number): Promise<Order[]> {
+        return this.orderService.getByUserId(id);
+    }
     /**
      * An endpoint to create a new order
      */
@@ -31,14 +35,14 @@ export class OrderController {
      * An endpoint to update an order
      */
     @Put(':id')
-    put(@Param('id') id: string, @Body() newOrder: Order): Promise<void> {
+    put(@Param('id') id: number, @Body() newOrder: Order): Promise<void> {
         return this.orderService.update(id, newOrder);
     }
     /**
      * An endpoint to delete order
      */
     @Delete(':id')
-    delete(@Param('id') id: string): Promise<void> {
+    delete(@Param('id') id: number): Promise<void> {
         return this.orderService.delete(id);
     }
 }

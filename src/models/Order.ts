@@ -8,7 +8,8 @@ export class Order {
 
     @ManyToOne(type => User, user => user.orders, { onDelete: 'CASCADE' }) private _user: User;
 
-    @OneToMany(type => OrderItem, orderItem => orderItem.order,{ onDelete: 'CASCADE' })
+    @OneToMany(type => OrderItem, orderItem => orderItem.order,{ onDelete: 'CASCADE',
+        cascade: ['insert', 'update'] })
     _orderItems: OrderItem[];
 
     @Column() private _region: string;

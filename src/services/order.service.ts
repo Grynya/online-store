@@ -25,7 +25,29 @@ export class OrderService {
     ) {
     }
     getAll(): Promise<Order[]> {
-        return this.orderRepository.find();
+        return this.orderRepository.query('select "order_id", "User".name as userName,' +
+            ' "Product".name as productName, "Product".price, "Order"._region, "Order"._city, "Order"._street, ' +
+            '"Order"."_numOfBuild"\n' +
+            'from "Order"\n' +
+            '         left join "User" on "Order"."UserId" = "User".id\n' +
+            '         left join "OrderItem" on "Order"._id = "OrderItem".order_id\n' +
+            '    left join "Product" on "OrderItem"."productId" = "Product".id;')
+    }
+
+    async getByUserId(userId: number): Promise<Order[]> {
+        const user = await this.userRepository.findOne({
+            where: {
+                id: userId
+            }
+        });
+        if (!user) throw new HttpException('No user with such id', HttpStatus.NOT_FOUND);
+        return this.orderRepository.query('select "order_id", "Product".name as productName, "Product".price,' +
+            ' "Order"._region, ' +
+            '"Order"._city, "Order"._street, "Order"."_numOfBuild"\n' +
+            'from "Order"\n' +
+            '         left join "OrderItem" on "Order"._id = "OrderItem".order_id\n' +
+            '    left join "Product" on "OrderItem"."productId" = "Product".id\n' +
+            '       where "UserId"='+userId)
     }
 
     @UseFilters(HttpExceptionFilter)
@@ -62,11 +84,11 @@ export class OrderService {
 
         await this.orderRepository.save(order);
     }
-    update(id: string, newOrder: Order): Promise<any> {
+    update(id: number, newOrder: Order): Promise<any> {
         return this.orderRepository.update(id, newOrder);
     }
 
-    delete(id: string): Promise<any> {
+    delete(id: number): Promise<any> {
         return this.orderRepository.delete(id);
     }
 }
