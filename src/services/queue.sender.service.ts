@@ -5,7 +5,7 @@ import * as amqp from 'amqplib/callback_api';
 @Injectable()
 export class QueueSenderService {
     sendMessage = (message: Message) => {
-        amqp.connect(process.env.AMPQ_HOST, (connError, connection) => {
+        amqp.connect(process.env.AMQP_URL, (connError, connection) => {
             if (connError) {
                 throw connError;
             }

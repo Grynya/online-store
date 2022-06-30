@@ -21,7 +21,7 @@ import {OrderItemModule} from "./modules/order.item.module";
     ConfigModule.forRoot({isGlobal: true}),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      // url: "localhost://user:password@postgres:5432/db",
+      // url: process.env.DATABASE_URL,
       host: process.env.DATABASE_HOST,
       port: parseInt(process.env.DATABASE_PORT),
       username: process.env.DATABASE_USERNAME,

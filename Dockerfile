@@ -16,5 +16,5 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 8080
-CMD [ "node", "dist/main" ]
+EXPOSE 8083
+CMD [ "npm", "start" ]

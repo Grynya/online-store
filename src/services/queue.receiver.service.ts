@@ -7,7 +7,7 @@ import * as LanguageDetect from 'languagedetect';
 @Injectable()
 export class QueueReceiverService {
     private getChannel = () => new Promise((resolve) => {
-        amqp.connect(process.env.AMPQ_HOST).then((conn) => {
+        amqp.connect(process.env.AMQP_URL).then((conn) => {
             conn.createChannel().then((ch) => {
                 ch.prefetch(1000).then(() => resolve(ch))
             })
